@@ -55,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
                 request.enqueue(object : Callback<LoginResponse?> {
                     override fun onResponse(call: Call<LoginResponse?>, response: Response<LoginResponse?>) {
                         if (response.isSuccessful) {
-                            val intent = Intent(baseContext, DashboardActivity::class.java)
+                            val intent = Intent(baseContext, CoursesActivity::class.java)
                             intent.putExtra("name", nameIntent)
                             startActivity(intent)
                             Toast.makeText(baseContext,"Student loggedin Successfully", Toast.LENGTH_LONG).show()

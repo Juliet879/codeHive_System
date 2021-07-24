@@ -11,7 +11,7 @@ import com.example.studentregistration.R
 import com.example.studentregistration.adapters.CoursesRecyclerViewAdapter
 
 class CoursesActivity : AppCompatActivity() {
-    lateinit var message :TextView
+//    lateinit var message :TextView
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,9 +19,9 @@ class CoursesActivity : AppCompatActivity() {
 
         var studentName = intent.getStringExtra("name")
 
-        message = findViewById(R.id.tvWelcomeMsg)
-
-        message.text = "Welcome ${studentName}"
+//        message = findViewById(R.id.tvWelcomeMsg)
+//
+//        message.text = "Welcome ${studentName}"
 
         display()
     }

@@ -62,13 +62,12 @@ class MainActivity : AppCompatActivity() {
             val country = spNationality.selectedItem.toString()
             val dob = etDob.text.toString()
             val phone = etPhoneNumber.text.toString()
-            if (name.isEmpty() || email.isEmpty() || password.isEmpty() || country.isEmpty() || dob.isEmpty() || phone.isEmpty()){
-                etName.error = "Name is required"
-                etDob.error = "Date of birth is required"
+            if (email.isEmpty() || password.isEmpty()){
+//                etDob.error = "Date of birth is required"
                 etEmail.error = "Email required"
                 etPassword.error = "ID Number required"
-                etPhoneNumber.error = "Input phone number"
-                etPhoneNumber.error = "Input phone number"
+//                etPhoneNumber.error = "Input phone number"
+//                etPhoneNumber.error = "Input phone number"
             }
 
              val registrationRequest = RegistrationRequest(
@@ -85,7 +84,6 @@ class MainActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<RegistrationResponse?>, response: Response<RegistrationResponse?>) {
                     if (response.isSuccessful){
                         val intent = Intent(baseContext,LoginActivity::class.java)
-                        intent.putExtra("name",name)
                         startActivity(intent)
                         Toast.makeText(baseContext,"Student added Successfully",Toast.LENGTH_LONG).show()
                     }
