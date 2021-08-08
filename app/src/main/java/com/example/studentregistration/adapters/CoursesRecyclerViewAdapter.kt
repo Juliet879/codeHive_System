@@ -5,10 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.studentregistration.Models.Courses
 import com.example.studentregistration.R
+import com.example.studentregistration.models.CoursesResponse
 
-class CoursesRecyclerViewAdapter(var courseList:List<Courses>): RecyclerView.Adapter<CoursesViewHolder>() {
+class CoursesRecyclerViewAdapter(var courseList:List<CoursesResponse>): RecyclerView.Adapter<CoursesViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoursesViewHolder {
         var itemView = LayoutInflater.from(parent.context).inflate(R.layout.course_item_view,parent,false)
         return CoursesViewHolder(itemView)
