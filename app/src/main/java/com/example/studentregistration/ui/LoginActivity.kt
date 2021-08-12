@@ -14,7 +14,6 @@ import com.example.studentregistration.viewmodel.LoginViewModel
 class LoginActivity : AppCompatActivity() {
     lateinit var binding:ActivityLoginBinding
     val loginViewModel:LoginViewModel by viewModels()
-    lateinit var sharedPreferences: SharedPreferences
     lateinit var sessionManager:SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,29 +29,34 @@ class LoginActivity : AppCompatActivity() {
         binding.btnLogin.setOnClickListener {
             sessionManager = SessionManager(this)
 
-            if (binding.etLoginEmail.text.toString().isEmpty() || binding.etLoginPassword.text.toString().isEmpty()) {
+            if (binding.etLoginEmail.text.toString()
+                    .isEmpty() || binding.etLoginPassword.text.toString().isEmpty()
+            ) {
                 binding.etLoginEmail.setError("Email Required")
                 binding.etLoginPassword.setError("Password Required")
-            }
-            else{
+            } else {
                 val loginRequest = LoginRequest(
                     email = binding.etLoginEmail.text.toString(),
                     password = binding.etLoginPassword.text.toString()
                 )
                 loginViewModel.loginStudent(loginRequest)
+
+                loginViewModel.loginLiveData.observe(this, { loginResponse ->
+                    if (!loginResponse.student_id.isNullOrBlank()) {
+                        Toast.makeText(baseContext, "Login Successfully", Toast.LENGTH_LONG).show()
+                        sessionManager.saveAccessToken(loginResponse.access_token)
+                        val intent = Intent(baseContext, CoursesActivity::class.java)
+                        startActivity(intent)
+                    }
+                    else{
+                        Toast.makeText(baseContext,"Not Successful",Toast.LENGTH_LONG).show()
+                    }
+                })
+
+                loginViewModel.loginFailedLiveData.observe(this, { error ->
+                    Toast.makeText(baseContext, error, Toast.LENGTH_LONG).show()
+                })
             }
         }
-        loginViewModel.loginLiveData.observe(this,{loginResponse ->
-            if (!loginResponse.studentId.isEmpty()){
-                Toast.makeText(baseContext,"Login Successfully",Toast.LENGTH_LONG).show()
-                sessionManager.saveAccessToken(loginResponse.accessToken)
-                val intent = Intent(baseContext,CoursesActivity::class.java)
-                startActivity(intent)
-            }
-        })
-
-        loginViewModel.loginFailedLiveData.observe(this, {error ->
-            Toast.makeText(baseContext,error,Toast.LENGTH_LONG).show()
-        })
     }
 }

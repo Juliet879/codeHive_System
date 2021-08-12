@@ -11,17 +11,16 @@ import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 class UserRepository {
-    private val apiInterface = ApiClient.buildApiClient(ApiInterface::class.java)
     suspend fun registerStudent(registrationRequest: RegistrationRequest) :
             Response<RegistrationResponse> =
         withContext(Dispatchers.IO) {
-            return@withContext apiInterface.registerStudent(registrationRequest)
+            return@withContext ApiClient.api.registerStudent(registrationRequest)
         }
 
     suspend fun loginStudent(loginRequest: LoginRequest):
             Response<LoginResponse> =
             withContext(Dispatchers.IO) {
-                return@withContext apiInterface.loginStudent(loginRequest)
+                return@withContext ApiClient.api.loginStudent(loginRequest)
             }
 }
 

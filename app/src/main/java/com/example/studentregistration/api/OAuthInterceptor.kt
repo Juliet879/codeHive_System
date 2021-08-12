@@ -11,7 +11,7 @@ class OAuthInterceptor(context: Context) : Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response {
             val requestBuilder = chain.request().newBuilder()
 
-            // If token has been saved, add it to the request
+            //adding access token if saved to the request
             sessionManager.fetchAccessToken()?.let {
                 requestBuilder.addHeader("Authorization", "Bearer $it")
             }

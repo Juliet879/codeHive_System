@@ -3,7 +3,7 @@ package com.example.studentregistration.models
 import com.google.gson.annotations.SerializedName
 
 data class LoginResponse(
-    @SerializedName("student_id") var studentId:String,
-    @SerializedName("access_token") var accessToken :String,
+    @SerializedName("studentId") var student_id:String,
+    @SerializedName("accessToken") var access_token :String,
     var message :String
 )

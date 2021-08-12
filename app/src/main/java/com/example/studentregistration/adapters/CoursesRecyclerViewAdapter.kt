@@ -16,10 +16,10 @@ class CoursesRecyclerViewAdapter(var courseList:List<CoursesResponse>): Recycler
 
     override fun onBindViewHolder(holder: CoursesViewHolder, position: Int) {
         var currentCourse = courseList.get(position)
-        holder.tvCourseName.text = currentCourse.courseName
+        holder.tvCourseName.text = currentCourse.course_name
         holder.tvDescription.text = currentCourse.description
         holder.tvInstructor.text = currentCourse.instructor
-        holder.tvCode.text =  currentCourse.courseCode
+        holder.tvCode.text =  currentCourse.course_code
 
     }
 

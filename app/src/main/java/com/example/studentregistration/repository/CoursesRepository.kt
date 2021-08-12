@@ -8,12 +8,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 
-class CoursesRepository {
-    private val  apiInterface = ApiClient.apiInterface
+class CoursesRepository() {
+//    private val  apiInterface = ApiClient.buildApiClient(ApiInterface::class.java)
 
     suspend fun getCourses():
             Response<List<CoursesResponse>> =
         withContext(Dispatchers.IO){
-            return@withContext apiInterface.getCourses()
+            return@withContext ApiClient.api.getCourses()
         }
 }

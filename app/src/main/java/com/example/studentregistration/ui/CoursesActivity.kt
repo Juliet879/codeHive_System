@@ -19,7 +19,6 @@ class CoursesActivity : AppCompatActivity() {
     setContentView(binding.root)
 
 }
-
     override fun onResume() {
         super.onResume()
         coursesViewModel.getCourses()

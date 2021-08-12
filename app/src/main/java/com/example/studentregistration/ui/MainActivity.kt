@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
         registerViewModel.registrationLiveData.observe(this, { regResponse->
-            if (!regResponse.studentId.isEmpty()){
+            if (!regResponse.studentId.isNullOrEmpty()){
                 Toast.makeText(baseContext, "Registration successful", Toast.LENGTH_LONG).show()
             }
         })

@@ -13,8 +13,7 @@ interface ApiInterface {
     @POST("/students/login")
     suspend fun loginStudent(@Body loginRequest: LoginRequest) : Response<LoginResponse>
     @GET("/courses")
-    suspend fun getCourses():Response<List<CoursesResponse>>
+    suspend fun getCourses() : Response<List<CoursesResponse>>
 
 
-// GET http://13.244.243.129/courses
 }
