@@ -23,8 +23,8 @@ class CoursesActivity : AppCompatActivity() {
         super.onResume()
         coursesViewModel.getCourses()
         coursesViewModel.coursesLiveData.observe(this,{courseResponse ->
-            binding.rvCourses.adapter = CoursesRecyclerViewAdapter(courseResponse)
-            binding.rvCourses.layoutManager = LinearLayoutManager(baseContext)
+                binding.rvCourses.adapter = CoursesRecyclerViewAdapter(courseResponse)
+                binding.rvCourses.layoutManager = LinearLayoutManager(baseContext)
         })
     }
 }
