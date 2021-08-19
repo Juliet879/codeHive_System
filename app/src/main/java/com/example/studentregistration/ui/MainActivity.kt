@@ -1,10 +1,13 @@
 package com.example.studentregistration.ui
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
 import androidx.activity.viewModels
+import com.example.studentregistration.Constants
 import com.example.studentregistration.models.RegistrationRequest
 import com.example.studentregistration.databinding.ActivityMainBinding
 import com.example.studentregistration.viewmodel.RegisterViewModel
@@ -13,12 +16,15 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     val registerViewModel: RegisterViewModel by viewModels()
     var error = false
+    lateinit var prefs:SharedPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        prefs = getSharedPreferences(Constants.SHAREDPREFS,Context.MODE_PRIVATE)
+        redirectStudent()
 
         val nationality = arrayOf("Kenyan", "Ugandan", "Rwandan", "South Sudan")
         val nationalityAdapter =
@@ -33,6 +39,17 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+    private fun redirectStudent() {
+        var accessToken = prefs.getString(Constants.SHAREDPREFS,Constants.EMPTYSTRING)
+        if (!accessToken!!.isNotEmpty()){
+            startActivity(Intent(baseContext,CoursesActivity::class.java))
+        }
+        else{
+            startActivity(Intent(baseContext,LoginActivity::class.java))
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         binding.btnRegister.setOnClickListener {
@@ -66,6 +83,7 @@ class MainActivity : AppCompatActivity() {
             })
 
     }
+
 }
 
 
