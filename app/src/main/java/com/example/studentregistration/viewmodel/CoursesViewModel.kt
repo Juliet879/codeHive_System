@@ -12,9 +12,9 @@ class CoursesViewModel:ViewModel(){
     val coursesFailedLiveData = MutableLiveData<String>()
     val coursesRepository = CoursesRepository()
 
-    fun getCourses (){
+    fun getCourses (access_token:String){
         viewModelScope.launch {
-            val response = coursesRepository.getCourses()
+            val response = coursesRepository.getCourses(access_token)
             if (response.isSuccessful){
                 coursesLiveData.postValue(response.body())
             }

@@ -41,15 +41,17 @@ class LoginActivity : AppCompatActivity() {
 
                 loginViewModel.loginLiveData.observe(this, { loginResponse ->
                     if (!loginResponse.student_id.isNullOrBlank()) {
-                        Toast.makeText(baseContext, loginResponse.message, Toast.LENGTH_LONG).show()
+//                        Toast.makeText(baseContext, loginResponse.message, Toast.LENGTH_LONG).show()
 //                        sessionManager.saveAccessToken(loginResponse.access_token)
 //                    binding.tvLogin.visibiity = View.GONE
 
-                        var editor = prefs.edit()
-                        editor.putString("ACCESS_TOKEN",loginResponse.message)
-                        editor.putString("STUDENT_ID",loginResponse.student_id)
+                        val editor = prefs.edit()
+                        val bearerToken = loginResponse.access_token
+                        editor.putString("ACCESS_TOKEN",bearerToken)
                         editor.apply()
-                        startActivity(Intent(baseContext, CoursesActivity::class.java))
+                        val intent = Intent(baseContext, CoursesActivity::class.java)
+                        intent.putExtra("STUDENT_ID",loginResponse.student_id)
+                        startActivity(intent)
                     }
 
                 })

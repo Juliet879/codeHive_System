@@ -1,14 +1,18 @@
 package com.example.studentregistration.adapters
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentregistration.R
 import com.example.studentregistration.models.CoursesResponse
+import com.example.studentregistration.ui.CoursesActivity
 
-class CoursesRecyclerViewAdapter(var courseList:List<CoursesResponse>): RecyclerView.Adapter<CoursesViewHolder>() {
+class CoursesRecyclerViewAdapter(var courseList:List<CoursesResponse>,var context: Context): RecyclerView.Adapter<CoursesViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoursesViewHolder {
         var itemView = LayoutInflater.from(parent.context).inflate(R.layout.course_item_view,parent,false)
         return CoursesViewHolder(itemView)
@@ -21,6 +25,13 @@ class CoursesRecyclerViewAdapter(var courseList:List<CoursesResponse>): Recycler
         holder.tvInstructor.text = currentCourse.instructor
         holder.tvCode.text =  currentCourse.course_code
 
+        holder.btnEnrol.setOnClickListener {
+            var intent = Intent(context,CoursesActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.putExtra("courseId",currentCourse.course_id)
+            context.startActivity(intent)
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -32,5 +43,6 @@ class CoursesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
     var tvDescription = itemView.findViewById<TextView>(R.id.tvDescription)
     var tvInstructor = itemView.findViewById<TextView>(R.id.tvInstructor)
     var tvCode = itemView.findViewById<TextView>(R.id.tvCode)
+    var btnEnrol = itemView.findViewById<ImageView>(R.id.btnEnrol)
 
 }

@@ -11,9 +11,9 @@ import retrofit2.Response
 class CoursesRepository() {
 //    private val  apiInterface = ApiClient.buildApiClient(ApiInterface::class.java)
 
-    suspend fun getCourses():
+    suspend fun getCourses(access_token:String):
             Response<List<CoursesResponse>> =
         withContext(Dispatchers.IO){
-            return@withContext ApiClient.api.getCourses()
+            return@withContext ApiClient.api.getCourses(access_token)
         }
 }

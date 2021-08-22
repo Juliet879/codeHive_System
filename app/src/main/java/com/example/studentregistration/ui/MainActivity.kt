@@ -16,14 +16,14 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     val registerViewModel: RegisterViewModel by viewModels()
     var error = false
-    lateinit var prefs:SharedPreferences
+    lateinit var prefs: SharedPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        prefs = getSharedPreferences(Constants.SHAREDPREFS,Context.MODE_PRIVATE)
+        prefs = getSharedPreferences(Constants.SHAREDPREFS, Context.MODE_PRIVATE)
         redirectStudent()
 
         val nationality = arrayOf("Kenyan", "Ugandan", "Rwandan", "South Sudan")
@@ -34,31 +34,46 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.tvLogin.setOnClickListener {
-            val intent = Intent(baseContext,LoginActivity::class.java)
+            val intent = Intent(baseContext, LoginActivity::class.java)
             startActivity(intent)
         }
 
     }
 
     private fun redirectStudent() {
-        var accessToken = prefs.getString(Constants.SHAREDPREFS,Constants.EMPTYSTRING)
-        if (!accessToken!!.isNotEmpty()){
-            startActivity(Intent(baseContext,CoursesActivity::class.java))
-        }
-        else{
-            startActivity(Intent(baseContext,LoginActivity::class.java))
+        var accessToken = prefs.getString(Constants.SHAREDPREFS, Constants.EMPTYSTRING)
+        if (accessToken!!.isNotEmpty()) {
+            startActivity(Intent(baseContext, CoursesActivity::class.java))
+        } else {
+            startActivity(Intent(baseContext, LoginActivity::class.java))
         }
     }
 
     override fun onResume() {
         super.onResume()
         binding.btnRegister.setOnClickListener {
+            validate()
+        }
 
-            if (binding.etEmail.text.toString().isEmpty() || binding.etDob.text.toString().isEmpty()) {
-                error = true
-                binding.etEmail.error = "Email required"
-                binding.etDob.error = "Date of Birth required"
-            } else {
+        registerViewModel.registrationLiveData.observe(this, { regResponse ->
+            if (!regResponse.studentId.isNullOrEmpty()) {
+               Toast.makeText(baseContext, "Registration successful", Toast.LENGTH_LONG).show()
+                val intent = Intent(baseContext, LoginActivity::class.java)
+                startActivity(intent)
+            }
+        })
+        registerViewModel.registrationFailedLiveData.observe(this, { str ->
+            Toast.makeText(baseContext, str, Toast.LENGTH_LONG).show()
+        })
+
+    }
+
+    fun validate() {
+        if (binding.etEmail.text.toString().isEmpty() || binding.etDob.text.toString().isEmpty()) {
+            error = true
+            binding.etEmail.error = "Email required"
+            binding.etDob.error = "Date of Birth required"
+        } else {
 
             val registrationRequest = RegistrationRequest(
                 name = binding.etName.text.toString(),
@@ -68,22 +83,11 @@ class MainActivity : AppCompatActivity() {
                 password = binding.etPassword.text.toString(),
                 email = binding.etEmail.text.toString()
             )
-                registerViewModel.registerUser(registrationRequest)
-                val intent = Intent(baseContext,LoginActivity::class.java)
-                startActivity(intent)
+            registerViewModel.registerUser(registrationRequest)
+
         }
-    }
-        registerViewModel.registrationLiveData.observe(this, { regResponse->
-            if (!regResponse.studentId.isNullOrEmpty()){
-                Toast.makeText(baseContext, "Registration successful", Toast.LENGTH_LONG).show()
-            }
-        })
-        registerViewModel.registrationFailedLiveData.observe(this,  { str ->
-                Toast.makeText(baseContext, str, Toast.LENGTH_LONG).show()
-            })
 
     }
-
 }
 
 
