@@ -16,10 +16,11 @@ import com.example.studentregistration.databinding.ActivityLoginBinding
 import com.example.studentregistration.viewmodel.LoginViewModel
 
 class LoginActivity : AppCompatActivity() {
-    lateinit var binding:ActivityLoginBinding
-    val loginViewModel:LoginViewModel by viewModels()
-//    lateinit var sessionManager:SessionManager
-     lateinit  var prefs :SharedPreferences
+    lateinit var binding: ActivityLoginBinding
+    val loginViewModel: LoginViewModel by viewModels()
+
+    //    lateinit var sessionManager:SessionManager
+    lateinit var prefs: SharedPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,36 +40,37 @@ class LoginActivity : AppCompatActivity() {
         }
 
 
-                loginViewModel.loginLiveData.observe(this, { loginResponse ->
-                    if (!loginResponse.student_id.isNullOrBlank()) {
+        loginViewModel.loginLiveData.observe(this, { loginResponse ->
+            if (!loginResponse.student_id.isNullOrBlank()) {
 //                        Toast.makeText(baseContext, loginResponse.message, Toast.LENGTH_LONG).show()
 //                        sessionManager.saveAccessToken(loginResponse.access_token)
 //                    binding.tvLogin.visibiity = View.GONE
 
-                        val editor = prefs.edit()
-                        val bearerToken = loginResponse.access_token
-                        editor.putString("ACCESS_TOKEN",bearerToken)
-                        editor.apply()
-                        val intent = Intent(baseContext, CoursesActivity::class.java)
-                        intent.putExtra("STUDENT_ID",loginResponse.student_id)
-                        startActivity(intent)
-                    }
-
-                })
-
-                loginViewModel.loginFailedLiveData.observe(this, { error ->
-//                    binding.tvLogin.visibiity = View.GONE
-                    Toast.makeText(baseContext, error, Toast.LENGTH_LONG).show()
-                })
+                val editor = prefs.edit()
+                val bearerToken = loginResponse.access_token
+                editor.putString("ACCESS_TOKEN", bearerToken)
+                editor.apply()
+                val intent = Intent(baseContext, CoursesActivity::class.java)
+                intent.putExtra("STUDENT_ID", loginResponse.student_id)
+                startActivity(intent)
             }
 
+        })
 
-    fun validate(){
-        if (binding.etLoginEmail.text.toString().isEmpty() || binding.etLoginPassword.text.toString().isEmpty()) {
+        loginViewModel.loginFailedLiveData.observe(this, { error ->
+//                    binding.tvLogin.visibiity = View.GONE
+            Toast.makeText(baseContext, error, Toast.LENGTH_LONG).show()
+        })
+    }
+
+
+    fun validate() {
+        if (binding.etLoginEmail.text.toString()
+                .isEmpty() || binding.etLoginPassword.text.toString().isEmpty()
+        ) {
             binding.etLoginEmail.setError("Email Required")
             binding.etLoginPassword.setError("Password Required")
-        }
-        else {
+        } else {
             val loginRequest = LoginRequest(
                 email = binding.etLoginEmail.text.toString(),
                 password = binding.etLoginPassword.text.toString()
@@ -76,5 +78,5 @@ class LoginActivity : AppCompatActivity() {
             loginViewModel.loginStudent(loginRequest)
 
         }
-        }
     }
+}

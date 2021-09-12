@@ -15,7 +15,8 @@
         android:theme="@style/Theme.StudentRegistration"
         tools:targetApi="m">
         <activity
-            android:name=".ui.CoursesActivity"/>
+            android:name=".ui.CoursesActivity"
+            android:theme="@style/Theme.Regisistration2"/>
         <activity android:name=".ui.LoginActivity"
             android:parentActivityName=".ui.MainActivity"/>
 

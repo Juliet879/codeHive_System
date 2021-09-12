@@ -9,8 +9,10 @@ import retrofit2.Response
 
 class EnrolCourseRepo {
     suspend fun enrolCourse(access_token:String,enrolmentRequest: EnrolmentRequest)
-    :Response<EnrolmentResponse> = withContext(Dispatchers.IO){
-        return@withContext ApiClient.api.enrolCourse(access_token,enrolmentRequest)
+    :Response<EnrolmentResponse> =
+        withContext(Dispatchers.IO){
+            var response = ApiClient.api.enrolCourse(access_token,enrolmentRequest)
+        return@withContext response
     }
 
 }

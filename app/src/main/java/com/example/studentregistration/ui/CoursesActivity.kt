@@ -11,7 +11,6 @@ import com.example.studentregistration.Constants
 import com.example.studentregistration.adapters.CoursesRecyclerViewAdapter
 import com.example.studentregistration.databinding.ActivityCoursesBinding
 import com.example.studentregistration.models.EnrolmentRequest
-import com.example.studentregistration.repository.CoursesRepository
 import com.example.studentregistration.viewmodel.CoursesViewModel
 import com.example.studentregistration.viewmodel.EnrolCourseViewModel
 
@@ -26,7 +25,7 @@ class CoursesActivity : AppCompatActivity() {
         binding = ActivityCoursesBinding.inflate(layoutInflater)
         setContentView(binding.root)
         prefs = getSharedPreferences(Constants.SHAREDPREFS, Context.MODE_PRIVATE)
-
+                                                                                                                //     setupPagerAdapter()
     }
 
     override fun onResume() {
@@ -38,10 +37,12 @@ class CoursesActivity : AppCompatActivity() {
         val courseIntent = intent.getStringExtra("courseId")
 
 
-//        Log user out if access token is empty
+                                                                                                                 //     Log user out if access token is empty
         if (!accessToken!!.isEmpty()) {
-            enrol()
+                                                                                                                 // Instance of courseViewModel
             coursesViewModel.getCourses(bearer)
+                                                                                                                 //    Instance of the enrol request
+            enrol()
             val enrolReq = EnrolmentRequest(
                 student_id = studentIdIntent.toString(),
                 course_id = courseIntent.toString()
@@ -71,3 +72,25 @@ class CoursesActivity : AppCompatActivity() {
     }
 
 }
+
+
+//    fun setupPagerAdapter(){
+//        binding.viewPager.adapter = ViewPagerAdapter(supportFragmentManager)
+//        binding.bottomNavigationView.setOnItemReselectedListener { item ->
+//            when(item.itemId){
+//                R.id.courses->{
+//                    binding.viewPager.currentItem=0
+//                    return@setOnItemReselectedListener true
+//                }
+//                R.id.myCourses->{
+//                binding.viewPager.currentItem=1
+//                return@setOnItemReselectedListener true
+//            }
+//                else ->{
+//                    binding.viewPager.currentItem=0
+//                    return@setOnItemReselectedListener true
+//                }
+//            }
+//
+//        }
+//    }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/courses"
+        android:title="All Courses"
+        android:icon="@drawable/ic_baseline_emoji_flags_24"/>
+<item android:id="@+id/myCourses"
+    android:title="My Courses"
+    android:icon="@drawable/ic_baseline_credit_card_24"/>
+</menu>
