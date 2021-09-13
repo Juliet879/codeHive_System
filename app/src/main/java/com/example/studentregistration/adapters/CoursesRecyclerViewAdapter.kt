@@ -11,8 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.studentregistration.R
 import com.example.studentregistration.models.CoursesResponse
 import com.example.studentregistration.ui.CoursesActivity
+import com.example.studentregistration.ui.EnrolmentClickListener
 
-class CoursesRecyclerViewAdapter(var courseList:List<CoursesResponse>,var context: Context): RecyclerView.Adapter<CoursesViewHolder>() {
+class CoursesRecyclerViewAdapter(var courseList:List<CoursesResponse>,var context: Context, var enrolmentClickListener:
+EnrolmentClickListener): RecyclerView
+.Adapter<CoursesViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoursesViewHolder {
         var itemView = LayoutInflater.from(parent.context).inflate(R.layout.course_item_view,parent,false)
         return CoursesViewHolder(itemView)
@@ -26,10 +29,7 @@ class CoursesRecyclerViewAdapter(var courseList:List<CoursesResponse>,var contex
         holder.tvCode.text =  currentCourse.course_code
 
         holder.btnEnrol.setOnClickListener {
-            var intent = Intent(context,CoursesActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            intent.putExtra("courseId",currentCourse.course_id)
-            context.startActivity(intent)
+            enrolmentClickListener.onClickEnrolment(currentCourse.course_id)
         }
 
     }

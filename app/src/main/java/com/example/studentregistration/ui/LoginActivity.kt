@@ -48,7 +48,8 @@ class LoginActivity : AppCompatActivity() {
 
                 val editor = prefs.edit()
                 val bearerToken = loginResponse.access_token
-                editor.putString("ACCESS_TOKEN", bearerToken)
+                editor.putString(Constants.ACCESSTOKEN, bearerToken)
+                editor.putString(Constants.STUDENTID, loginResponse.student_id)
                 editor.apply()
                 val intent = Intent(baseContext, CoursesActivity::class.java)
                 intent.putExtra("STUDENT_ID", loginResponse.student_id)
