@@ -11,7 +11,9 @@ import com.example.studentregistration.Constants
 import com.example.studentregistration.models.RegistrationRequest
 import com.example.studentregistration.databinding.ActivityMainBinding
 import com.example.studentregistration.viewmodel.RegisterViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     val registerViewModel: RegisterViewModel by viewModels()

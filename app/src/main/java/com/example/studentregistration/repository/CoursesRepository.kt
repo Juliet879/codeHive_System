@@ -1,19 +1,29 @@
 package com.example.studentregistration.repository
 
-import com.example.studentregistration.api.ApiClient
+import androidx.lifecycle.LiveData
+import com.example.studentregistration.CodeHiveApp
 import com.example.studentregistration.api.ApiInterface
-import com.example.studentregistration.api.SessionManager
-import com.example.studentregistration.models.CoursesResponse
+import com.example.studentregistration.database.CodeHiveDatabase
+import com.example.studentregistration.database.CoursesDao
+import com.example.studentregistration.models.Course
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import javax.inject.Inject
 
-class CoursesRepository() {
-//    private val  apiInterface = ApiClient.buildApiClient(ApiInterface::class.java)
+class CoursesRepository @Inject constructor(var service:ApiInterface,val coursesDao: CoursesDao) {
+    val db = CodeHiveDatabase.getDatabase(CodeHiveApp.appContext)
 
-    suspend fun getCourses(access_token:String):
-            Response<List<CoursesResponse>> =
+    suspend fun getCourses(access_token:String):Response<List<Course>> =
         withContext(Dispatchers.IO){
-            return@withContext ApiClient.api.getCourses(access_token)
+            val response =  service.getCourses(access_token)
+            response.body()?.forEach { course ->
+                coursesDao.insertCourse(course)
+            }
+            return@withContext response
         }
+
+    fun getCoursesFromDb(): LiveData<List<Course>> {
+        return db.getCourseDao().getCourses()
+    }
 }

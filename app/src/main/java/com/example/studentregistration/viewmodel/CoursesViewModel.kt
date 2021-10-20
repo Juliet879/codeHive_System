@@ -3,24 +3,31 @@ package com.example.studentregistration.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.studentregistration.api.ApiInterface
+import com.example.studentregistration.database.CoursesDao
+import com.example.studentregistration.models.Course
 import com.example.studentregistration.models.CoursesResponse
 import com.example.studentregistration.repository.CoursesRepository
+import dagger.hilt.android.HiltAndroidApp
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CoursesViewModel:ViewModel(){
-    val coursesLiveData = MutableLiveData<List<CoursesResponse>>()
+@HiltViewModel
+class CoursesViewModel @Inject constructor(var coursesRepository: CoursesRepository):ViewModel(){
+    var coursesLiveData = MutableLiveData<List<Course>>()
     val coursesFailedLiveData = MutableLiveData<String>()
-    val coursesRepository = CoursesRepository()
 
     fun getCourses (access_token:String){
         viewModelScope.launch {
             val response = coursesRepository.getCourses(access_token)
-            if (response.isSuccessful){
+            if (response.isSuccessful) {
                 coursesLiveData.postValue(response.body())
             }
-            else{
-                coursesFailedLiveData.postValue(response.errorBody()?.string())
-            }
         }
+        }
+    fun getDbCourses(){
+        coursesLiveData = coursesRepository.getCoursesFromDb() as MutableLiveData<List<Course>>
     }
+
 }

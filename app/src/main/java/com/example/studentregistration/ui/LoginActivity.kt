@@ -14,7 +14,10 @@ import com.example.studentregistration.api.SessionManager
 import com.example.studentregistration.models.LoginRequest
 import com.example.studentregistration.databinding.ActivityLoginBinding
 import com.example.studentregistration.viewmodel.LoginViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
     val loginViewModel: LoginViewModel by viewModels()
@@ -36,6 +39,7 @@ class LoginActivity : AppCompatActivity() {
         binding.btnLogin.setOnClickListener {
 //            sessionManager = SessionManager(this)
             validate()
+
 //            binding.etLoginEmail.visibility = View.GONE
         }
 
@@ -45,7 +49,6 @@ class LoginActivity : AppCompatActivity() {
 //                        Toast.makeText(baseContext, loginResponse.message, Toast.LENGTH_LONG).show()
 //                        sessionManager.saveAccessToken(loginResponse.access_token)
 //                    binding.tvLogin.visibiity = View.GONE
-
                 val editor = prefs.edit()
                 val bearerToken = loginResponse.access_token
                 editor.putString(Constants.ACCESSTOKEN, bearerToken)
@@ -69,8 +72,8 @@ class LoginActivity : AppCompatActivity() {
         if (binding.etLoginEmail.text.toString()
                 .isEmpty() || binding.etLoginPassword.text.toString().isEmpty()
         ) {
-            binding.etLoginEmail.setError("Email Required")
-            binding.etLoginPassword.setError("Password Required")
+            binding.tilEmail.setError("Email Required")
+            binding.tillPassWord.setError("Password Required")
         } else {
             val loginRequest = LoginRequest(
                 email = binding.etLoginEmail.text.toString(),

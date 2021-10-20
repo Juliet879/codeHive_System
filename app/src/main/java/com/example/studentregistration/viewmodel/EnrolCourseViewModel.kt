@@ -6,10 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.studentregistration.models.EnrolmentRequest
 import com.example.studentregistration.models.EnrolmentResponse
 import com.example.studentregistration.repository.EnrolCourseRepo
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class EnrolCourseViewModel:ViewModel() {
-    val enrolCourseRepo = EnrolCourseRepo()
+@HiltViewModel
+class EnrolCourseViewModel @Inject constructor(val enrolCourseRepo: EnrolCourseRepo):ViewModel() {
     val enrolLiveData = MutableLiveData<EnrolmentResponse>()
     val enrolFailed  = MutableLiveData<String>()
 

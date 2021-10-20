@@ -7,12 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.studentregistration.models.LoginRequest
 import com.example.studentregistration.models.LoginResponse
 import com.example.studentregistration.repository.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel: ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(val userRepository: UserRepository): ViewModel() {
     val loginLiveData = MutableLiveData<LoginResponse>()
     val loginFailedLiveData = MutableLiveData<String>()
-    private val userRepository = UserRepository()
 
     fun loginStudent(loginRequest: LoginRequest){
         viewModelScope.launch {
@@ -26,3 +28,5 @@ class LoginViewModel: ViewModel() {
         }
     }
 }
+
+//   val response = userRepository.loginStudent(loginRequest)
