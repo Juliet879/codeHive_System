@@ -10,9 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.studentregistration.R
 import com.example.studentregistration.models.Course
 import com.example.studentregistration.ui.AllCoursesFragment
-import com.example.studentregistration.ui.EnrolmentClickListener
 
-class CoursesRecyclerViewAdapter(var courseList: List<Course>, var context: Context, var enrolmentClickListener: EnrolmentClickListener): RecyclerView
+class CoursesRecyclerViewAdapter(var courseList: List<Course>, var context: Context, var enrolmentClickListener: AllCoursesFragment.EnrolmentClickListener): RecyclerView
 .Adapter<CoursesViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoursesViewHolder {
         var itemView = LayoutInflater.from(parent.context).inflate(R.layout.course_item_view,parent,false)
@@ -43,5 +42,4 @@ class CoursesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
     var tvInstructor = itemView.findViewById<TextView>(R.id.tvInstructor)
     var tvCode = itemView.findViewById<TextView>(R.id.tvCode)
     var btnEnrol = itemView.findViewById<ImageView>(R.id.btnEnrol)
-
 }
